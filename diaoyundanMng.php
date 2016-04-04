@@ -202,6 +202,7 @@ function timeNow(){
     echo date("Y-m-d h:i:s");
     exit();
     //仅仅就只是获取当前的时间
+    //有点多余的感觉啊
 }
 
 //生成调运单号和条形码
