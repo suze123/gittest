@@ -3,28 +3,28 @@
 session_start();
 require_once('config.php');
 if(!isset($_SESSION['userid'])){
-    echo json_encode(array('res'=>'Error','msg'=>'没有登录或已超时!'));
-    return;
+echo json_encode(array('res'=>'Error','msg'=>'没有登录或已超时!'));
+return;
 }
 $act=addslashes($_POST['act']);
 if(!($_SESSION['permission']&0x8000)){
-    echo json_encode(array('res'=>'Error','msg'=>'无权使用人员管理功能!'));
-    return;
+echo json_encode(array('res'=>'Error','msg'=>'无权使用人员管理功能!'));
+return;
 }
 if($act=='get_slt')
-   select();
+select();
 if($act=='get_cydw')
-   getDanwei();
+getDanwei();
 if($act=='get_jsy')
-   select_jsy();
+select_jsy();
 if($act=='get_mydwmc'){
-   echo $_SESSION['danweimc'];
-   exit();
+echo $_SESSION['danweimc'];
+exit();
 }
 if($act=='get_time')
-   timeNow();
+timeNow();
 if($act=='get_myck')
-   select_ck();	
+select_ck();	
 if($act=='DYDH')
    dydh();
 if($act=='get_dj')
@@ -201,6 +201,7 @@ exit();
 function timeNow(){
     echo date("Y-m-d h:i:s");
     exit();
+    //仅仅就只是获取当前的时间
 }
 
 //生成调运单号和条形码
