@@ -39,6 +39,7 @@ if($act=='Fenyexianshi')
 	xianshibio();
 
 //下拉框选项查询函数 
+//查询单位名称和车牌号
 function select(){
 $dbh=dbconnect();
 $biao=addslashes($_POST['table']);
