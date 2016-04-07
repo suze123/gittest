@@ -1,0 +1,203 @@
+﻿repository 仓库 存放所有文件及其历史信息
+checkout   取出或切换到指定版本的文件
+version    记录标识一个版本
+eag        记录标识一个主要版本
+
+
+分布式版本控系统 git
+
+适合多人团队开发
+离线工作
+。。。
+
+
+文件状态及工作区域
+
+working directory 编辑、修改文件
+
+staging area（index） 暂存已经修改的文件
+
+GIt repository   最终确定的文件保存到仓库 成为一个新的版本。并且对他人可见
+
+官网git-scm.com 
+配置命令
+
+git config --global user.name "suze123"  设置用户名
+git config --global user.email "476028832@qq.com" 设置用户邮箱
+git config --global color.ui true 配置屏幕颜色
+git config --list 查看设置
+
+git help 帮助命令
+
+常用命令
+mkdir 文件夹名    创建一个文件夹或使用已有文件夹
+git init   在文件夹内初始化git，创建git仓库
+touch 文件名  创建文件
+git status 查看git当前的状态
+git add 文件名  将文件添加到缓存
+git commit -m "注释说明" 将缓存提交到仓库
+git commit -a -"注释说明" 直接添加到仓库 跳过缓存（新创建的文件不可用）
+rm 文件名 删除文件（只是在当前版本删除，历史版本可以找到）
+git mv 文件名 重命后名子   重命名文件名字 
+
+git diff 查看变化 woring-index 工作去的变化
+git siff --status 变化index-git  缓冲区的变化
+git diff 文件1 文件2
+git diff 版本号 对比当前版本与目标版本的差别
+git diff 版本号1 版本号2  对比两个版本之间的差别
+注：后面加上 --stat 表比较文件的差异
+
+
+
+git config --global user.name "suze123"  设置用户名
+git config --global user.email "476028832@qq.com" 设置用户邮箱
+git config --global color.ui true 配置屏幕颜色
+git config --list 查看设置
+ssh-keygen -t rsa -C “476028832@qq.com” 生成ssh key
+github.com 注册一个账号
+edit Profrom-->sshkeys
+create a repository
+git remote add origin git@github.com:suze123/gittest.git 配置远程连接
+ssh git@github.com 测试连接
+git init (初始化一个git仓库到当前文件夹）
+
+
+git diff 查看变化 woring-index
+git log命令显示从最近到最远的提交日志
+git log --pretty=oneline 简化显示提交日志
+git reset --hard HEAD^回退到上一个版本
+git reflog记录你的每一次命令
+git checkout --文件名   文件回到最近一次git commit或git add时的状态，没有--，就变成了“切换到另一个分支”的命令
+git reset HEAD file可以把暂存区的修改撤销掉（unstage），重新放回工作区
+git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本
+
+
+$ git rm test.txt
+rm 'test.txt'
+$ git commit -m "remove test.txt"  删除提交到版本库中的文件
+
+
+git checkout 分支名  命令加上-b参数表示创建并切换，相当于以下两条命令：
+$ git branch 分支名  创建分支
+$ git checkout 分支名  切换到分支
+
+
+git branch命令会列出所有分支，当前分支前面会标一个*号
+
+git merge 指定分支名  该命令用于合并指定分支到当前分支
+
+git merge 指定分支名  合并时Fast-forward信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快。
+
+查看分支：git branch
+
+创建分支：git branch <name>
+
+切换分支：git checkout <name>
+
+创建+切换分支：git checkout -b <name>
+git checkout --文件名   文件回到最近一次git commit或git add时的状态
+
+合并某分支到当前分支：git merge <name>
+
+删除分支：git branch -d <name>
+
+git log --graph --pretty=oneline --abbrev-commit用带参数的git log也可以看到分支的合并情况
+
+
+master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+
+那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+
+你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
+
+
+git merge --no-ff -m "merge with no-ff" dev   --no-ff表示禁用Fast forward
+
+
+git stash  stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+
+git stash list命令看刚才的工作现场存
+
+需要恢复一下，有两个办法：
+
+一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+
+另一种方式是用git stash pop，恢复的同时把stash内容也删了
+
+
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除
+
+git checkout -b dev origin/dev 	创建远程origin的dev分支到本地
+
+提交有冲突，解决办法也很简单，Git已经提示我们，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送
+
+git pull也失败了，原因是没有指定本地dev分支与远程origin/dev分支的链接，根据提示，设置dev和origin/dev的链接：git branch --set-upstream dev origin/dev
+
+
+
+查看远程库信息，使用git remote -v；
+
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+
+标签也是版本库的一个快照 跟分支很像 （但是分支可以移动，标签不能移动，所以，创建和删除标签都是瞬间完成的）
+
+
+
+在Git中打标签先要切换到需要打标签的分支上
+git tag v1.0打一个新标签
+可以用命令git tag查看所有标签
+标签不是按时间顺序列出，而是按字母排序的。可以用git show <tagname>查看标签信息
+用命令git show <tagname>可以看到说明文字，还可以通过-s用私钥签名一个标签
+
+命令git push origin <tagname>可以推送一个本地标签；
+
+命令git push origin --tags可以推送全部未推送过的本地标签；
+
+命令git tag -d <tagname>可以删除一个本地标签；
+
+命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
+
+在Git工作区的根目录下创建一个特殊的.gitignore文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件
+
+
+reset 与 checkout
+reset
+1 git reset --hard HEAD^ 回退到上一个版本
+2 git reset  HEAD file 可以把暂存区的修改撤销掉（unstage），重新放回工作区
+checkout
+1 git checkout --文件名   文件回到最近一次git commit或git add时的状态，没有--，就变成了“切换到另一个分支”的命令
+2 git checkout 分支名     切换分支 命令加上-b参数表示创建并切换，相当于以下两条命令
+3 git checkout -b <name>  创建并切换新的分支
+4 git checkout -b dev origin/dev 	创建远程origin的dev分支到本地
+5 git checkout 文件名  撤销工作去的修改
+6 git checkout HEAD -- 文件名 撤销暂存区add操作 清除工作区的修改
+merge
+git merge 分支名  该命令用于合并指定分支到当前分支
+
+stash
+1 git stash  stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+2 git stash list命令看刚才的工作现场存
+需要恢复一下，有两个办法：
+1 git stash apply 但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+2 git stash pop，恢复的同时把stash内容也删了
+
+git diff
+git diff 查看变化 woring-index 工作去的变化
+git siff --status 变化index-git  缓冲区的变化
+git diff 文件1 文件2
+git diff 版本号 对比当前版本与目标版本的差别
+git diff 版本号1 版本号2  对比两个版本之间的差别
+注：后面加上 --stat 表比较文件的差异
+
+
+Git，以后st就表示status：
+git config --global alias.st status
